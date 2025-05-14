@@ -62,7 +62,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { useLanguage } from '../composables/useLanguage';
@@ -70,7 +70,7 @@ import { useLanguage } from '../composables/useLanguage';
 // Register ScrollToPlugin
 gsap.registerPlugin(ScrollToPlugin);
 
-const { t } = useLanguage();
+const { t, currentLanguage } = useLanguage();
 
 // ScrollToPlugin options
 const scrollToOptions = {
@@ -101,22 +101,39 @@ const smoothScrollTo = (targetId) => {
   });
 };
 
-onMounted(() => {
+// Function to initialize animations
+const initAnimations = () => {
   // Hero animations - simplified and optimized
   const heroContent = document.querySelector('#heroContent');
   if (heroContent) {
-    const heroElements = heroContent.children;
-    gsap.set(heroElements, { opacity: 0, y: 20 });
+    // Clear any existing animations
+    gsap.killTweensOf(heroContent.children);
 
-    gsap.to(heroElements, {
+    // Set initial state
+    gsap.set(heroContent.children, { opacity: 0, y: 20 });
+
+    // Create animation
+    gsap.to(heroContent.children, {
       opacity: 1,
       y: 0,
       duration: 0.8,
       stagger: 0.15,
-      ease: 'power1.out',
-      // Removed clearProps to keep elements visible
+      ease: 'power2.out',
     });
   }
+};
+
+onMounted(() => {
+  // Initialize animations when component is mounted
+  initAnimations();
+});
+
+// Watch for language changes to reset animations
+watch(currentLanguage, () => {
+  // Small delay to ensure DOM is updated
+  setTimeout(() => {
+    initAnimations();
+  }, 100);
 });
 </script>
 

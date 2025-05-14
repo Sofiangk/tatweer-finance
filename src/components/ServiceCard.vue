@@ -17,12 +17,6 @@
       <p class="text-navy-700 mb-4">
         {{ description }}
       </p>
-      <a
-        href="#contact"
-        class="inline-block text-[#0124D4] hover:text-[#0124D4]/80 font-medium transition duration-300"
-      >
-        {{ learnMoreText }} →
-      </a>
     </div>
   </div>
 </template>
@@ -44,10 +38,6 @@ defineProps({
   index: {
     type: Number,
     default: 0,
-  },
-  learnMoreText: {
-    type: String,
-    default: 'تواصل معنا',
   },
 });
 </script>

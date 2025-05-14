@@ -72,35 +72,42 @@ watch(currentLanguage, () => {
 
 // Function to initialize animations
 const initAnimations = () => {
+  // Clear any existing animations
+  ScrollTrigger.getAll().forEach((trigger) => {
+    if (trigger.vars.id?.includes('services')) {
+      trigger.kill();
+    }
+  });
+
   // Set initial states for grid items
   gsap.set('#servicesGrid > div', { autoAlpha: 0, y: 20 });
 
   // Set initial state for section title
-  gsap.set('.section-title h2', { opacity: 0, y: -20 });
-  gsap.set('.section-title p', { opacity: 0, y: 20 });
-  gsap.set('.section-title .w-24', { scaleX: 0 });
+  gsap.set('#services .section-title h2', { opacity: 0, y: -20 });
+  gsap.set('#services .section-title p', { opacity: 0, y: 20 });
+  gsap.set('#services .section-title .w-24', { scaleX: 0 });
 
   // Animate section title
   ScrollTrigger.create({
     trigger: '#services',
     start: 'top 80%',
-    once: true,
+    id: 'servicesTitle',
     onEnter: () => {
-      gsap.to('.section-title h2', {
+      gsap.to('#services .section-title h2', {
         opacity: 1,
         y: 0,
         duration: 0.6,
         ease: 'power2.out',
       });
 
-      gsap.to('.section-title .w-24', {
+      gsap.to('#services .section-title .w-24', {
         scaleX: 1,
         duration: 0.6,
         delay: 0.2,
         ease: 'power2.out',
       });
 
-      gsap.to('.section-title p', {
+      gsap.to('#services .section-title p', {
         opacity: 1,
         y: 0,
         duration: 0.6,
@@ -124,7 +131,7 @@ const initAnimations = () => {
       });
     },
     start: 'top 80%',
-    once: true,
+    id: 'servicesGrid',
   });
 
   // Force ScrollTrigger to refresh

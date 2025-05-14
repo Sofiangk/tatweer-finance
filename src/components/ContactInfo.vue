@@ -84,6 +84,9 @@
           v-for="(social, index) in socialLinks"
           :key="index"
           :href="social.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          :aria-label="social.name"
           class="w-10 h-10 rounded-full bg-[#0124D4] flex items-center justify-center text-white hover:bg-[#0124D4]/80 transition duration-300 cursor-pointer"
         >
           <component :is="social.icon" class="w-5 h-5" />
@@ -102,15 +105,33 @@ import {
   FacebookIcon,
   InstagramIcon,
   LinkedinIcon,
+  MessageCircleIcon,
 } from 'lucide-vue-next';
 import { useLanguage } from '@/composables/useLanguage';
 
 const { t } = useLanguage();
 
 const socialLinks = [
-  { icon: FacebookIcon, url: '#' },
-  { icon: InstagramIcon, url: '#' },
-  { icon: LinkedinIcon, url: '#' },
+  {
+    icon: FacebookIcon,
+    url: 'https://www.facebook.com/profile.php?id=61560571358583',
+    name: 'Facebook',
+  },
+  {
+    icon: MessageCircleIcon,
+    url: 'https://api.whatsapp.com/send?phone=%2B218915708555&context=AffGpQHTpibBLYnBDYEM3F7JUiwNT07HeF8frJ1Qd6YitntOXa1xi65GNf8ovw1kmUHPxbWGjH4Aal3s81f1DH71BOVktFGeFxEOw3pIzEZ5IuACBb2ibMG3rWDc7tDEAMntIyItRnC7NM3E51WmZvMg-Q&source=FB_Page&app=facebook&entry_point=page_cta&fbclid=IwY2xjawKQFgdleHRuA2FlbQIxMABicmlkETA1MGF3V2FHWUlXZTlETGVvAR4E8Tu5FBuh0KDD-aieabFc3fLzR3VMzI6QDL-aI4QG8Le64KSP4xOVnqzWvA_aem_WgUKy34H-S4k3T7OLSurzw',
+    name: 'WhatsApp',
+  },
+  {
+    icon: InstagramIcon,
+    url: '#',
+    name: 'Instagram',
+  },
+  {
+    icon: LinkedinIcon,
+    url: '#',
+    name: 'LinkedIn',
+  },
 ];
 </script>
 

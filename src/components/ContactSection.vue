@@ -54,7 +54,11 @@ watch(currentLanguage, () => {
 // Function to initialize animations
 const initAnimations = () => {
   // Clear any existing animations
-  ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  ScrollTrigger.getAll().forEach((trigger) => {
+    if (trigger.vars.id?.includes('contact')) {
+      trigger.kill();
+    }
+  });
 
   // Set initial states for section title
   gsap.set('#contact .section-title h2', { opacity: 0, y: -20 });
@@ -68,7 +72,7 @@ const initAnimations = () => {
   ScrollTrigger.create({
     trigger: '#contact',
     start: 'top 80%',
-    once: true,
+    id: 'contactTitle',
     onEnter: () => {
       gsap.to('#contact .section-title h2', {
         opacity: 1,
@@ -98,7 +102,7 @@ const initAnimations = () => {
   ScrollTrigger.create({
     trigger: '#contactGrid',
     start: 'top 75%',
-    once: true,
+    id: 'contactGrid',
     onEnter: () => {
       gsap.to('#contactGrid > div:first-child', {
         autoAlpha: 1,

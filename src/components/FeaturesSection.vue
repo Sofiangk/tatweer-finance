@@ -77,7 +77,14 @@ watch(currentLanguage, () => {
 // Function to initialize animations
 const initAnimations = () => {
   // Clear any existing animations
-  ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+  ScrollTrigger.getAll().forEach((trigger) => {
+    if (
+      trigger.vars.id?.includes('features') ||
+      trigger.vars.id?.includes('why-us')
+    ) {
+      trigger.kill();
+    }
+  });
 
   // Set initial states for section title
   gsap.set('#why-us .section-title h2', { opacity: 0, y: -20 });
@@ -91,7 +98,7 @@ const initAnimations = () => {
   ScrollTrigger.create({
     trigger: '#why-us',
     start: 'top 80%',
-    once: true,
+    id: 'whyUsTitle',
     onEnter: () => {
       gsap.to('#why-us .section-title h2', {
         opacity: 1,
@@ -121,7 +128,7 @@ const initAnimations = () => {
   ScrollTrigger.create({
     trigger: '#featuresGrid',
     start: 'top 75%',
-    once: true,
+    id: 'featuresGrid',
     onEnter: () => {
       gsap.to('#featuresGrid > div', {
         autoAlpha: 1,

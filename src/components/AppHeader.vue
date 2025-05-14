@@ -5,13 +5,18 @@
     >
       <a href="/" class="flex items-center cursor-pointer">
         <img
-          src="/images/tatweer logo white.png"
+          src="/images/tatweer logo - white.svg"
           alt="شركة تطوير للوساطة المالية"
-          class="h-16 md:min-h-24"
+          class="h-16 md:min-h-24 p-2"
         />
       </a>
       <div class="flex items-center">
-        <nav class="hidden md:flex space-x-6 space-x-reverse text-xl">
+        <nav
+          class="hidden md:flex text-xl"
+          :class="
+            direction === 'rtl' ? 'space-x-6 space-x-reverse' : 'space-x-6'
+          "
+        >
           <a
             v-for="(link, index) in navLinks"
             :key="index"
@@ -20,6 +25,9 @@
             >{{ link.text }}</a
           >
         </nav>
+
+        <!-- Language Switcher -->
+        <LanguageSwitcher class="hidden md:block" />
 
         <button @click="toggleMobileMenu" class="md:hidden text-white text-xl">
           <MenuIcon v-if="!mobileMenuOpen" class="w-8 h-8" />
@@ -48,6 +56,12 @@
           class="text-white hover:text-sky-300 font-medium transition duration-300 cursor-pointer"
           >{{ link.text }}</a
         >
+        <!-- Mobile Language Switcher -->
+        <div
+          class="mt-2 pt-2 border-t border-white/20 w-full flex justify-center"
+        >
+          <LanguageSwitcher />
+        </div>
       </nav>
     </div>
   </header>
@@ -59,11 +73,12 @@ import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { MenuIcon, XIcon } from 'lucide-vue-next';
 import { useLanguage } from '@/composables/useLanguage';
+import LanguageSwitcher from './LanguageSwitcher.vue';
 
 // Register ScrollToPlugin
 gsap.registerPlugin(ScrollToPlugin);
 
-const { t } = useLanguage();
+const { t, currentLanguage, direction } = useLanguage();
 
 // Navigation links using translations
 const navLinks = computed(() => [
@@ -120,14 +135,12 @@ const closeMobileMenu = () => {
   });
 };
 
-// Smooth scroll function
+// Improved smooth scroll function for consistent behavior
 const smoothScrollTo = (targetId) => {
   // Make sure targetId starts with #
   if (!targetId.startsWith('#')) {
     targetId = '#' + targetId;
   }
-
-  console.log('Scrolling to:', targetId); // Debug log
 
   const targetElement = document.querySelector(targetId);
   if (!targetElement) {
@@ -135,14 +148,23 @@ const smoothScrollTo = (targetId) => {
     return;
   }
 
+  // Enhanced GSAP scrolling for better cross-browser compatibility
   gsap.to(window, {
-    duration: 0.7,
+    duration: 0.8, // Slightly longer for smoother effect
     scrollTo: {
       y: targetElement,
       offsetY: 80,
-      autoKill: true,
+      autoKill: false, // Changed to false to ensure completion
     },
     ease: 'power2.inOut',
+    onStart: () => {
+      // Disable user scrolling during animation for consistency
+      document.body.style.overflow = 'hidden';
+    },
+    onComplete: () => {
+      // Re-enable scrolling
+      document.body.style.overflow = '';
+    },
   });
 };
 

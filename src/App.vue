@@ -1,5 +1,5 @@
 <template>
-  <div class="app" dir="rtl">
+  <div class="app" :dir="direction">
     <AppHeader />
     <main>
       <HeroSection id="home" />
@@ -30,13 +30,13 @@ import ContactSection from './components/ContactSection.vue';
 import AppFooter from './components/AppFooter.vue';
 
 // Get language state
-const { currentLanguage } = useLanguage();
+const { currentLanguage, direction } = useLanguage();
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 const isMounted = ref(false);
 
-// Smooth scroll implementation for all anchor links (except header links)
+// Simple smooth scroll implementation for all anchor links
 const setupSmoothScroll = () => {
   // Select all anchor links except those in the header
   const anchors = document.querySelectorAll('a[href^="#"]:not(header a)');
@@ -57,19 +57,17 @@ const setupSmoothScroll = () => {
       const targetElement = document.querySelector(targetId);
       if (!targetElement) return;
 
-      gsap.to(window, {
-        duration: 0.7,
-        scrollTo: {
-          y: targetElement,
-          offsetY: 80,
-          autoKill: true,
-        },
-        ease: 'power2.inOut',
-        onComplete: () => {
-          // Force ScrollTrigger to refresh after scroll completes
-          ScrollTrigger.refresh();
-        },
+      // Use simple scrollIntoView with behavior: smooth
+      // This works with the CSS scroll-behavior: smooth
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
       });
+
+      // Force ScrollTrigger to refresh after scroll completes
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 1000);
     });
   });
 };
@@ -143,50 +141,58 @@ h6 {
   margin-bottom: 1.5rem; /* mb-6 */
 }
 
-/* RTL specific spacing */
-.space-x-reverse > * + * {
+/* Direction-specific styles */
+[dir='rtl'] .space-x-reverse > * + * {
   margin-right: 0.5rem;
   margin-left: 0;
 }
 
 /* Fix for flex layouts in RTL */
-.md\:flex-row {
+[dir='rtl'] .md\:flex-row {
   flex-direction: row-reverse;
 }
 
-/* Fix for icon spacing in RTL */
-.ml-2 {
+[dir='ltr'] .md\:flex-row {
+  flex-direction: row;
+}
+
+/* Fix for icon spacing */
+[dir='rtl'] .ml-2 {
   margin-left: 0;
   margin-right: 0.5rem;
 }
 
-.ml-3 {
+[dir='rtl'] .ml-3 {
   margin-left: 0;
   margin-right: 0.75rem;
 }
 
-.ml-4 {
+[dir='rtl'] .ml-4 {
   margin-left: 0;
   margin-right: 1rem;
 }
 
-/* Ensure proper text alignment in RTL */
-.text-left {
+/* Ensure proper text alignment */
+[dir='rtl'] .text-left {
   text-align: right;
 }
 
-/* Fix for RTL specific padding */
-.pr-2 {
+[dir='ltr'] .text-right {
+  text-align: left;
+}
+
+/* Fix for direction-specific padding */
+[dir='rtl'] .pr-2 {
   padding-right: 0;
   padding-left: 0.5rem;
 }
 
-.pr-3 {
+[dir='rtl'] .pr-3 {
   padding-right: 0;
   padding-left: 0.75rem;
 }
 
-.pr-4 {
+[dir='rtl'] .pr-4 {
   padding-right: 0;
   padding-left: 1rem;
 }

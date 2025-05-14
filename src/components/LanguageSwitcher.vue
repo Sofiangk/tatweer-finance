@@ -41,7 +41,8 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useLanguage } from '../composables/useLanguage';
 import { GlobeIcon, ChevronDownIcon } from 'lucide-vue-next';
 
-const { currentLanguage, direction, t, toggleLanguage } = useLanguage();
+const { currentLanguage, direction, t, toggleLanguage, setLanguage } =
+  useLanguage();
 const isOpen = ref(false);
 
 const languages = [
@@ -55,7 +56,7 @@ const toggleDropdown = () => {
 
 const changeLanguage = (langCode) => {
   if (currentLanguage.value !== langCode) {
-    toggleLanguage();
+    setLanguage(langCode);
   }
   isOpen.value = false;
 };
