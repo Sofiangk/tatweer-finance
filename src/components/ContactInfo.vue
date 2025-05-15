@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white rounded-lg shadow-lg p-6 min-h-full">
     <h3 class="text-xl font-bold text-navy-900 mb-6 text-right">
-      {{ t('contact.info.title') }}
+      {{ t("contact.info.title") }}
     </h3>
     <div class="space-y-5">
       <div class="flex items-start">
@@ -12,10 +12,10 @@
         </div>
         <div class="text-right">
           <h4 class="font-bold text-navy-900">
-            {{ t('contact.info.address.label') }}
+            {{ t("contact.info.address.label") }}
           </h4>
           <p class="text-navy-700 whitespace-pre-line">
-            {{ t('contact.info.address.value') }}
+            {{ t("contact.info.address.value") }}
           </p>
         </div>
       </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="text-right">
           <h4 class="font-bold text-navy-900">
-            {{ t('contact.info.phone.label') }}
+            {{ t("contact.info.phone.label") }}
           </h4>
           <span dir="ltr" class="text-navy-700 block text-right">
             <a
@@ -49,13 +49,13 @@
         </div>
         <div class="text-right">
           <h4 class="font-bold text-navy-900">
-            {{ t('contact.info.email.label') }}
+            {{ t("contact.info.email.label") }}
           </h4>
           <a
             :href="`mailto:${t('contact.info.email.value')}`"
             class="text-navy-700 block cursor-pointer"
           >
-            {{ t('contact.info.email.value') }}
+            {{ t("contact.info.email.value") }}
           </a>
         </div>
       </div>
@@ -67,19 +67,24 @@
         </div>
         <div class="text-right">
           <h4 class="font-bold text-navy-900">
-            {{ t('contact.info.hours.label') }}
+            {{ t("contact.info.hours.label") }}
           </h4>
           <p class="text-navy-700">
-            {{ t('contact.info.hours.value') }}
+            {{ t("contact.info.hours.value") }}
           </p>
         </div>
       </div>
     </div>
     <div class="mt-6 text-right">
       <h4 class="font-bold text-navy-900 mb-3">
-        {{ t('contact.info.social') }}
+        {{ t("contact.info.social") }}
       </h4>
-      <div class="flex space-x-3 space-x-reverse justify-start text-xl">
+      <div
+        class="flex justify-start text-xl"
+        :class="[
+          direction === 'rtl' ? 'space-x-2 space-x-reverse ' : 'space-x-2 ',
+        ]"
+      >
         <a
           v-for="(social, index) in socialLinks"
           :key="index"
@@ -106,31 +111,31 @@ import {
   InstagramIcon,
   LinkedinIcon,
   MessageCircleIcon,
-} from 'lucide-vue-next';
-import { useLanguage } from '@/composables/useLanguage';
+} from "lucide-vue-next";
+import { useLanguage } from "@/composables/useLanguage";
 
-const { t } = useLanguage();
+const { t, direction } = useLanguage();
 
 const socialLinks = [
   {
     icon: FacebookIcon,
-    url: 'https://www.facebook.com/profile.php?id=61560571358583',
-    name: 'Facebook',
+    url: "https://www.facebook.com/profile.php?id=61560571358583",
+    name: "Facebook",
   },
   {
     icon: MessageCircleIcon,
-    url: 'https://api.whatsapp.com/send?phone=%2B218915708555&context=AffGpQHTpibBLYnBDYEM3F7JUiwNT07HeF8frJ1Qd6YitntOXa1xi65GNf8ovw1kmUHPxbWGjH4Aal3s81f1DH71BOVktFGeFxEOw3pIzEZ5IuACBb2ibMG3rWDc7tDEAMntIyItRnC7NM3E51WmZvMg-Q&source=FB_Page&app=facebook&entry_point=page_cta&fbclid=IwY2xjawKQFgdleHRuA2FlbQIxMABicmlkETA1MGF3V2FHWUlXZTlETGVvAR4E8Tu5FBuh0KDD-aieabFc3fLzR3VMzI6QDL-aI4QG8Le64KSP4xOVnqzWvA_aem_WgUKy34H-S4k3T7OLSurzw',
-    name: 'WhatsApp',
+    url: "https://api.whatsapp.com/send?phone=%2B218915708555&context=AffGpQHTpibBLYnBDYEM3F7JUiwNT07HeF8frJ1Qd6YitntOXa1xi65GNf8ovw1kmUHPxbWGjH4Aal3s81f1DH71BOVktFGeFxEOw3pIzEZ5IuACBb2ibMG3rWDc7tDEAMntIyItRnC7NM3E51WmZvMg-Q&source=FB_Page&app=facebook&entry_point=page_cta&fbclid=IwY2xjawKQFgdleHRuA2FlbQIxMABicmlkETA1MGF3V2FHWUlXZTlETGVvAR4E8Tu5FBuh0KDD-aieabFc3fLzR3VMzI6QDL-aI4QG8Le64KSP4xOVnqzWvA_aem_WgUKy34H-S4k3T7OLSurzw",
+    name: "WhatsApp",
   },
   {
     icon: InstagramIcon,
-    url: '#',
-    name: 'Instagram',
+    url: "#",
+    name: "Instagram",
   },
   {
     icon: LinkedinIcon,
-    url: '#',
-    name: 'LinkedIn',
+    url: "#",
+    name: "LinkedIn",
   },
 ];
 </script>
