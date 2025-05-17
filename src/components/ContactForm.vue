@@ -88,28 +88,50 @@
         >
           {{ t('contact.form.subject.label') }}
         </label>
-        <select
-          id="subject"
-          v-model="form.subject"
-          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500"
-          required
-        >
-          <option value="" disabled selected>
-            {{ t('contact.form.subject.placeholder') }}
-          </option>
-          <option value="account">
-            {{ t('contact.form.subject.options.account') }}
-          </option>
-          <option value="info">
-            {{ t('contact.form.subject.options.info') }}
-          </option>
-          <option value="support">
-            {{ t('contact.form.subject.options.support') }}
-          </option>
-          <option value="other">
-            {{ t('contact.form.subject.options.other') }}
-          </option>
-        </select>
+        <div class="relative">
+          <select
+            id="subject"
+            v-model="form.subject"
+            class="custom-select w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navy-500 appearance-none"
+            required
+          >
+            <option value="" disabled selected>
+              {{ t('contact.form.subject.placeholder') }}
+            </option>
+            <option value="account">
+              {{ t('contact.form.subject.options.account') }}
+            </option>
+            <option value="info">
+              {{ t('contact.form.subject.options.info') }}
+            </option>
+            <option value="support">
+              {{ t('contact.form.subject.options.support') }}
+            </option>
+            <option value="other">
+              {{ t('contact.form.subject.options.other') }}
+            </option>
+          </select>
+          <!-- Custom dropdown arrow -->
+          <div
+            class="pointer-events-none absolute inset-y-0"
+            :class="direction === 'rtl' ? 'left-0 pl-3' : 'right-0 pr-3'"
+            style="display: flex; align-items: center"
+          >
+            <svg
+              class="h-5 w-5 text-gray-400"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
       <div>
         <label
@@ -244,5 +266,43 @@ const submitForm = async () => {
 </script>
 
 <style scoped>
-/* Component-specific styles */
+/* Custom select styling for cross-browser consistency */
+.custom-select {
+  /* Remove default styling */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  /* Ensure consistent text alignment */
+  text-align: inherit;
+
+  /* Prevent text overflow */
+  text-overflow: ellipsis;
+
+  /* Ensure consistent background */
+  background-color: white;
+}
+
+/* Remove default arrow in IE */
+.custom-select::-ms-expand {
+  display: none;
+}
+
+/* Ensure proper padding for the custom arrow */
+.custom-select {
+  padding-right: 2.5rem;
+}
+
+/* RTL support for padding */
+:deep([dir='rtl']) .custom-select {
+  padding-right: 1rem;
+  padding-left: 2.5rem;
+}
+
+/* Ensure focus styles are consistent */
+.custom-select:focus {
+  border-color: #0124d4;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(1, 36, 212, 0.2);
+}
 </style>

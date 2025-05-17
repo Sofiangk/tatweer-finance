@@ -79,7 +79,10 @@
       <h4 class="font-bold text-navy-900 mb-3">
         {{ t('contact.info.social') }}
       </h4>
-      <div class="flex space-x-3 space-x-reverse justify-start text-xl">
+      <div
+        class="flex justify-start text-xl"
+        :class="direction === 'rtl' ? 'space-x-3 space-x-reverse' : 'space-x-3'"
+      >
         <a
           v-for="(social, index) in socialLinks"
           :key="index"
@@ -109,7 +112,7 @@ import {
 } from 'lucide-vue-next';
 import { useLanguage } from '@/composables/useLanguage';
 
-const { t } = useLanguage();
+const { t, direction } = useLanguage();
 
 const socialLinks = [
   {
